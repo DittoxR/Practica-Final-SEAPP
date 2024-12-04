@@ -4,10 +4,11 @@ const NoteRoutes = require('./routes/noteRoutes');
 const authRoutes = require('./routes/authRoutes'); // Importar rutas de autenticación
 const sequelize = require('./models/db');
 const sessionMiddleware = require('./middleware/auth'); // Importar middleware de autenticación
-
+const path = require('path');
 const app = express();
 
 app.use(express.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static('public')); // Servir archivos estáticos desde la carpeta public
 app.set('views', './src/views');   // Establecer la carpeta de vistas
 app.set('view engine', 'ejs');     // Motor de plantillas EJS

@@ -1,19 +1,27 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blog de Notas</title>
+    <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
-    <h1>Mis Notas</h1>
-    <form action="/create" method="POST">
-        <input type="text" name="title" placeholder="Título" required />
-        <textarea name="content" placeholder="Contenido" required></textarea>
-        <button type="submit">Guardar Nota</button>
-    </form>
-    <ul>
-        <% notes.forEach(note => { %>
-            <li><strong><%= note.title %></strong>: <%= note.content %></li>
-        <% }) %>
-    </ul>
+    <div class="container">
+        <h1 class="title">Mis Notas</h1>
+        <form action="/create" method="POST" class="note-form">
+            <input type="text" name="title" placeholder="Título" required class="input-title" />
+            <textarea name="content" placeholder="Contenido" required class="input-content"></textarea>
+            <button type="submit" class="btn-submit">Guardar Nota</button>
+        </form>
+        <ul class="notes-list">
+            <% notes.forEach(note => { %>
+                <li class="note-item">
+                    <strong class="note-title"><%= note.title %></strong>: 
+                    <span class="note-content"><%= note.content %></span>
+                </li>
+            <% }) %>
+        </ul>
+    </div>
 </body>
 </html>
