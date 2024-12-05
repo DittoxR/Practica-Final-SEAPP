@@ -2,7 +2,7 @@
 FROM node:20
 
 # Instalar MySQL
-RUN apt-get update && apt-get install -y mysql-server
+RUN apt-get update && apt-get install -y mariadb-server
 
 # Crear y establecer el directorio de trabajo
 WORKDIR /app
