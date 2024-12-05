@@ -1,23 +1,23 @@
-# Usar una imagen base de Node.js
-FROM node:20
-
-# Instalar MySQL
-RUN apt-get update && apt-get install -y mariadb-server
+# Usar una imagen base más reciente de Node.js
+FROM node:16
 
 # Crear y establecer el directorio de trabajo
 WORKDIR /app
 
-# Copiar los archivos de configuración de dependencias
-COPY package*.json ./ 
+# Instalar netcat para verificar conectividad
+RUN apt-get update && apt-get install -y netcat
 
-# Instalar dependencias
+# Copiar los archivos del proyecto
+COPY package*.json ./
+
+# Instalar las dependencias
 RUN npm install
 
-# Copiar el resto del proyecto
+# Copiar todo el proyecto
 COPY . .
 
-# Exponer el puerto 3000 (configurado en tu app)
+# Exponer el puerto que la aplicación va a usar
 EXPOSE 3000
 
-# Comando para iniciar la app y MySQL
-CMD service mysql start && node src/app.js
+# Ejecutar la aplicación
+CMD ["node", "src/app.js"]
