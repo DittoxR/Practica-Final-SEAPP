@@ -1,0 +1,44 @@
+services:
+  mysql-container:
+    image: mysql:8.0
+    container_name: mysql-container
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: noteblog
+      MYSQL_USER: usuario
+      MYSQL_PASSWORD: contraseña
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - blognet
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    ports:
+      - "3306:3306"
+
+  webapp:
+    image: dittoxr/blognotas
+    container_name: blog-notas-container
+    environment:
+      DB_NAME: noteblog
+      DB_USER: usuario
+      DB_PASSWORD: contraseña
+      DB_HOST: mysql-container
+      DB_PORT: 3306
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mysql-container
+    entrypoint: ["sh", "-c", "while ! nc -z mysql-container 3306; do sleep 1; done; npm start"]
+    networks:
+      - blognet
+
+volumes:
+  mysql-data:
+
+networks:
+  blognet:
+    driver: bridge
