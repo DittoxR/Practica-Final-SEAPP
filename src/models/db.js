@@ -1,6 +1,11 @@
+require('dotenv').config(); // Cargar las variables de entorno
+
 const { Sequelize } = require('sequelize');
-const sequelize = new Sequelize('noteblog', 'usuario', 'contraseña', {
-    host: 'localhost',
+
+// Configurar Sequelize con las variables de entorno
+const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_PASSWORD, {
+    host: process.env.DB_HOST,
+    port: process.env.DB_PORT, // Asegúrate de que la variable DB_PORT esté configurada en tu .env
     dialect: 'mysql',
 });
 
