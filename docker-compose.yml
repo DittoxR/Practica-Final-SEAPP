@@ -1,0 +1,26 @@
+version: '3'
+services:
+  web:
+    image: dittoxr/note-blog  # Usa la imagen que subiste a Docker Hub
+    ports:
+      - "3000:3000"           # Mapea el puerto 3000 de la VM al puerto 3000 del contenedor
+    environment:
+      - DB_HOST=db            # El contenedor web se conectará al servicio db
+      - DB_USER=root          # Usuario de MySQL
+      - DB_PASS=root_password # Contraseña de MySQL
+      - DB_NAME=noteblog     # Nombre de la base de datos
+    depends_on:
+      - db                    # El contenedor web depende de la base de datos MySQL
+  db:
+    image: mysql:5.7           # Imagen oficial de MySQL 5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: noteblog
+    ports:
+      - "3306:3306"            # Exponer el puerto 3306 para acceso externo si es necesario
+    volumes:
+      - mysql_data:/var/lib/mysql  # Volumen persistente para los datos de MySQL
+
+volumes:
+  mysql_data:  # Definir el volumen persistente
+
